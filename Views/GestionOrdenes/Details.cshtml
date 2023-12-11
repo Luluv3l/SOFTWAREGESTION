@@ -1,0 +1,109 @@
+@model List<SoftwareGestion.Models.OrdenDetails>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla con Búsqueda Manual</title>
+    <link rel="stylesheet" href="~/css/gestionorden/gestionorden.css" asp-append-version="true" />
+</head>
+<style>
+    .form-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .input-container {
+        flex-grow: 1;
+    }
+</style>
+
+<body>
+    <main class="my-form">
+        <div class="container-fluid">
+            <div class="row justify-content-left">
+                <div class="col-md-12">
+                    <div class="card" style="margin-left: 200px; max-width: 2000px;">
+                        <div class="card-header text-white d-flex justify-content-between align-items-center"
+                            style="background-color: #2980B9;">
+                            <h5>Lista de Ordenes de Pedidos</h5>
+                            <a href="@Url.Action("Create","GestionOrdenes")" id="show-popup"
+                                class="btn btn-light">+Crear Nuevo</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="container mt-3">
+                                        <input type="text" id="busqueda" placeholder="Buscar..."
+                                            class="form-control mb-2">
+                                        <div class="table-responsive">
+                                            <table id="mytable" class="table table-bordred table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-left"># Orden</th>
+                                                        <th class="text-left">Cliente</th>
+                                                        <th class="text-left">Nombre Producto</th>
+                                                        <th class="text-left">Descripcion Producto</th>
+                                                        <th class="text-left">Fecha</th>
+                                                        <th class="text-center">Estado Orden</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var orden in Model)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-left">@orden.Orden</td>
+                                                            <td class="text-left">@orden.Cliente</td>
+                                                            <td class="text-left">@orden.NombreProducto</td>
+                                                            <td class="text-left">@orden.DescripcionProducto</td>
+                                                            <td class="text-left">@orden.Fecha.ToString("dd/MM/yyyy")</td>
+                                                            <td class="text-center">@orden.EstadoOrden</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- Agrega la paginación -->
+                                        <div class="d-flex justify-content-center">
+                                            <ul class="pagination">
+                                                <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        const inputBusqueda = document.getElementById('busqueda');
+        const tabla = document.getElementById('mytable');
+        const filas = tabla.getElementsByTagName('tr');
+
+        inputBusqueda.addEventListener('input', () => {
+            const filtro = inputBusqueda.value.toLowerCase();
+
+            for (let i = 1; i < filas.length; i++) {
+                const textoFila = filas[i].textContent.toLowerCase();
+                if (textoFila.includes(filtro)) {
+                    filas[i].style.display = '';
+                } else {
+                    filas[i].style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

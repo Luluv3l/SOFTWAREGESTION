@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Gestión de Órdenes de Pedido</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.js"></script>
+</head>
+<style>
+    .hidden-column {
+        display: none;
+    }
+</style>
+
+<body>
+
+
+
+    <main class="my-form">
+        <div class="container-fluid">
+            <div class="row justify-content-left">
+                <div class="col-md-12">
+                    <div class="card" style="margin-left: 200px; max-width: 2000px;">
+                        <div class="card-header text-white d-flex justify-content-between align-items-center"
+                            style="background-color: #2980B9;">
+                            <h5>Ordenes de Pedidos</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="formularioOrdenPedido" method="post" action="/GestionOrdenes/GuardarOrdenPedido">
+                                <div class="container mt-4">
+                                    <div class="row">
+                                        <!-- Barra de búsqueda de clientes con Autocomplete -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="clienteBusqueda">Buscar Cliente:</label>
+                                                <div class="input-group">
+                                                    <input type="text" id="clienteBusqueda" name="clienteBusqueda"
+                                                        class="form-control" placeholder="Escriba el nombre del cliente"
+                                                        oninput="soloLetras(this); reiniciarSelect();" required />
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-primary" type="button"
+                                                            id="clienteDropdownButton">
+                                                            <i class="fas fa-search"></i> Buscar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <select id="clienteComboBox" class="form-control d-none">
+                                                        <option value="">Seleccione un cliente</option>
+                                                        <!-- Otras opciones del select -->
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <!-- Buscar Producto -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="busqueda">Buscar Producto:</label>
+                                                <div class="input-group">
+                                                    <input type="text" id="busqueda" class="form-control"
+                                                        placeholder="Escriba el nombre o código de producto" required />
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-primary"
+                                                            onclick="buscarProducto()">Buscar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Resultado, Cantidad, Talla en la misma fila -->
+                                    <div class="row mt-2">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="resultado">Resultado:</label>
+                                                <select id="resultado" class="form-control"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="cantidadProducto">Cantidad:</label>
+                                                <input type="number" id="cantidadProducto" class="form-control" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="tallaProducto">Talla:</label>
+                                                <select class="form-control" id="tallaProducto" required>
+                                                    <option value="">Selecione una talla</option>
+                                                    <option value="S">S</option>
+                                                    <option value="M">M</option>
+                                                    <option value="L">L</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-md-12">
+                                            <button type="button" class="btn btn-success"
+                                                onclick="agregarProducto()">Agregar Producto</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Lista de Productos -->
+                                    <div class="mt-4">
+                                        <h4 class="text-center">Lista de Productos</h4>
+                                        <table class="table" id="tablaProductos">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Descripcion</th>
+                                                    <th class="text-center">Talla</th>
+                                                    <th class="text-center">Cantidad</th>
+                                                    <th class="text-center">Precio Unitario</th>
+                                                    <th class="text-center">Precio Total</th>
+                                                    <th class="text-center">Acciones</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody id="listaProductos"></tbody>
+                                        </table>
+                                    </div>
+
+
+                                    <div class="row mt-2">
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-primary" onclick="generarPDF()">Generar
+                                                PDF</button>
+                                        </div>
+                                        <!-- Total a Pagar -->
+                                        <div class="col-md-6 text-right">
+                                            <h4>Total a Pagar</h4>
+                                            <p id="totalPagar">Total: ₡0.00</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-md-12">
+                                            <!-- Nuevo botón para guardar la orden de pedido -->
+                                            <button type="button" class="btn btn-primary"
+                                                onclick="guardarOrdenPedido()">Guardar Orden de Pedido</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+
+
+                        </div>
+                    </div>
+
+
+    </main>
+
+
+    <input type="hidden" id="idCliente" name="idCliente" />
+    <input type="hidden" id="idProducto" name="idProducto" />
+    <input type="hidden" id="cantidadProducto" name="cantidadProducto" />
+
+    <script>
+
+        function soloLetras(input) {
+
+            var regex = /[^a-zA-Z]/g;
+
+            input.value = input.value.replace(regex, '');
+        }
+
+
+
+    </script>
+    <script>
+        // Manejar la entrada en el campo de búsqueda
+        $("#clienteBusqueda").on("input", function () {
+            var busqueda = $(this).val();
+
+            $.ajax({
+                url: "/GestionOrdenes/BusquedaCliente",
+                type: "GET",
+                data: { busqueda: busqueda },
+                success: function (data) {
+                    // Limpiar el dropdown
+                    $("#clienteComboBox").empty();
+
+                    // Agregar la opción predeterminada
+                    $("#clienteComboBox").append("<option value=''>Seleccione un cliente</option>");
+
+                    if (data && data.length > 0) {
+                        // Si hay resultados, agregarlos al dropdown
+                        $.each(data, function (index, item) {
+                            $("#clienteComboBox").append("<option value='" + item.value + "'>" + item.label + "</option>");
+                        });
+                    } else {
+                        // Si no hay resultados, mostrar un mensaje
+                        $("#clienteComboBox").append("<option value=''>No se encontraron resultados</option>");
+                    }
+                },
+                error: function (error) {
+                    console.error("Error en la búsqueda de clientes.", error);
+                }
+            });
+        });
+
+       
+        $("#clienteDropdownButton").on("click", function () {
+            $("#clienteComboBox").toggleClass("d-none");
+        });
+
+        function buscarProducto() {
+            var busqueda = $("#busqueda").val();
+
+            $.ajax({
+                type: "GET",
+                url: "/GestionOrdenes/BusquedaProducto",
+                data: { busqueda: busqueda },
+                success: function (data) {
+                    mostrarResultados(data);
+
+                  
+                    $("#busquedaTabla").text(busqueda);
+                },
+                error: function () {
+                    alert("Error al realizar la búsqueda");
+                }
+            });
+        }
+
+        function mostrarResultados(data) {
+            var select = $("#resultado");
+            select.empty();
+
+            // Actualizar el campo de búsqueda en la tabla
+            $("#busquedaTabla").text($("#busqueda").val());
+
+            $.each(data, function (index, item) {
+                var option = $("<option>").val(item.value).text(item.label);
+                //option.data("precio", item.precio_venta);
+                option.data("id_producto", item.value);
+                select.append(option);
+
+                console.log(data)
+            });
+        }
+
+        var alertaGlobal;
+        function agregarProducto() {
+            var clienteId = $("#clienteComboBox").val();
+            var nombre = $("#resultado option:selected").text();
+            var cantidad = parseInt($("#cantidadProducto").val()) || 1;
+            var codigo = $("#resultado").val();
+            var talla = $("#tallaProducto").val();
+
+            console.log("Nombre del producto:", nombre);
+
+            if (isNaN(cantidad) || cantidad <= 0) {
+                alert('Ingrese una cantidad válida.');
+                return;
+            }
+
+         
+            calcularPrecioVentaYActualizarDisponibilidad(codigo, cantidad, function (resultado) {
+
+                if (resultado && !isNaN(resultado.precioVenta) && !isNaN(resultado.sumaMateria)) {
+            
+                    alertaGlobal = resultado.alerta;
+                    agregarProductoATabla(clienteId, nombre, codigo, cantidad, resultado.precioVenta, resultado.sumaMateria, talla, alertaGlobal);
+                } else {
+                    alert("Error al obtener el precio de venta o la suma de materia.");
+                }
+            });
+        }
+
+        function calcularPrecioVentaYActualizarDisponibilidad(codigo, cantidad, callback) {
+            $.ajax({
+                type: "POST",
+                url: "/GestionOrdenes/CalcularPrecioVenta",
+                data: {
+                    id_producto: codigo,
+                    cantidad: cantidad
+                },
+                success: function (response) {
+                    console.log("Respuesta completa:", response);
+                    console.log("Respuesta detallada:", JSON.stringify(response));
+
+                    var precioVenta = response?.precioVenta || response?.PrecioVenta;
+                    var sumaMateria = response?.SumaMateria || response?.sumaMateria;
+                    var alerta = response?.Alerta || response?.alerta;
+
+                    if (precioVenta !== undefined && !isNaN(precioVenta) && sumaMateria !== undefined && alerta !== undefined) {
+                        console.log("Precio de venta obtenido:", precioVenta);
+                        console.log("Suma de materia obtenida:", sumaMateria);
+                        console.log("Alerta obtenida:", alerta);
+                        callback({ precioVenta: precioVenta, sumaMateria: sumaMateria, alerta: alerta });
+                    } else {
+                        console.log("No se recibió un precio de venta, suma de materia o alerta válidos en la respuesta.");
+                        callback(null);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("Error al llamar al procedimiento almacenado.", errorThrown);
+                    alert("Error al llamar al procedimiento almacenado. Detalles: " + textStatus + ", " + errorThrown);
+                }
+            });
+        }
+        function agregarProductoATabla(clienteId, nombre, codigo, cantidad, precioVenta, sumaMateria, talla, alerta) {
+            if (!clienteId || !nombre || !codigo || isNaN(cantidad) || cantidad <= 0 || isNaN(precioVenta) || isNaN(sumaMateria) || precioVenta <= 0) {
+                console.error("Parámetros de entrada incorrectos.");
+                return;
+            }
+            console.log(clienteId);
+            console.log(codigo);
+            console.log(alerta);
+            var totalProducto = cantidad * precioVenta;
+
+            var fila = '<tr>' +
+                '<td class="text-center">' + nombre + '</td>' +
+                '<td class="text-center">' + talla + '</td>' +
+                '<td class="text-center hidden-column">' + clienteId + '</td>' +
+                '<td class="text-center hidden-column">' + codigo + '</td>' +
+                '<td class="text-center">' + cantidad + '</td>' +
+                '<td class="text-center">₡' + precioVenta.toFixed(2) + '</td>' +
+                '<td class="text-center">₡' + totalProducto.toFixed(2) + '</td>' +
+                '<td class="text-center hidden-column">₡' + sumaMateria.toFixed(2) + '</td>' +
+                '<td class="text-center hidden-column">' + alerta + '</td>' +
+                '<td class="text-center">' +
+                '<button type="button" class="btn btn-danger" onclick="eliminarProducto(this)">Eliminar</button>' +
+                '</td>' +
+                '</tr>';
+
+            $("#listaProductos").append(fila);
+
+        
+            console.log(alerta);
+            console.log(alertaGlobal);
+            var totalActual = parseFloat($("#totalPagar").text().replace('Total: ₡', '')) || 0;
+            var nuevoTotal = totalActual + totalProducto;
+
+            $("#totalPagar").text('Total: ₡' + nuevoTotal.toFixed(2));
+
+            limpiarCampos();
+        }
+
+        function limpiarCampos() {
+            $("#busqueda").val('');
+            $("#cantidadProducto").val('');
+            $("#tallaProducto").val('');
+        }
+
+
+        function guardarOrdenPedido() {
+           
+            $('#tablaProductos tbody tr').each(function () {
+                var clienteId = $(this).find('td:eq(2)').text(); 
+                var codigo = $(this).find('td:eq(3)').text(); 
+                var cantidad = $(this).find('td:eq(4)').text(); 
+                var precioVenta = parseFloat($(this).find('td:eq(5)').text().replace('₡', '')); 
+                var sumaMateria = parseFloat($(this).find('td:eq(7)').text().replace('₡', '')); 
+                var alerta = parseFloat($(this).find('td:eq(8)').text()); 
+
+            
+                enviarDetalleOrden(clienteId, codigo, cantidad, precioVenta, sumaMateria, alerta);
+            });
+        }
+
+        function enviarDetalleOrden(idCliente, codigo, cantidad, precioVenta, sumaMateria, alerta) {
+            $.ajax({
+                type: 'POST',
+                url: "/GestionOrdenes/GuardarOrdenPedido",
+                data: {
+                    idCliente: idCliente,
+                    codigo: codigo,
+                    cantidad: cantidad,
+                    precioVenta: precioVenta,
+                    sumaMateria: sumaMateria,
+                    alerta: alerta
+                },
+                success: function (response) {
+                
+                },
+                error: function (error) {
+                    console.error('Error al enviar detalles de la orden:', error);
+                }
+            });
+        }
+
+
+    </script>
+
+
+    <script>
+        // Función para generar el PDF
+        function generarPDF() {
+            const element = document.getElementById('tablaProductos'); // ID de la tabla que deseas convertir a PDF
+            html2pdf(element);
+        }
+    </script>
+
+
+    <script>
+        function reiniciarSelect() {
+            var inputCliente = document.getElementById('clienteBusqueda');
+            var selectCliente = document.getElementById('clienteComboBox');
+
+            // Si el input está vacío, reinicia el select
+            if (inputCliente.value === '') {
+                selectCliente.value = '';
+            }
+        }
+    </script>
+
+    <script>
+        // Función para eliminar un producto de la tabla
+        function eliminarProducto(button) {
+            var row = $(button).closest('tr'); // Usar $(button) en lugar de button
+            var totalProducto = parseFloat(row.find('td:eq(6)').text().replace('₡', '')) || 0;
+
+            // Restar el total del producto eliminado del total a pagar
+            var totalActual = parseFloat($("#totalPagar").text().replace('Total: ₡', '')) || 0;
+            var nuevoTotal = totalActual - totalProducto;
+            $("#totalPagar").text('Total: ₡' + nuevoTotal.toFixed(2));
+
+            // Eliminar la fila de la tabla
+            row.remove();
+        }
+    </script>
+
+</body>
+
+</html>

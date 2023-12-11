@@ -1,0 +1,132 @@
+@model List<SoftwareGestion.Models.CostosProduccion>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Costo Total Produccion Mensual</title>
+    <link rel="stylesheet" href="~/css/gestionorden/gestionorden.css" asp-append-version="true" />
+    <style>
+        /* Estilos adicionales si es necesario */
+    </style>
+</head>
+
+<body>
+    <main class="my-form">
+        <div class="container-fluid">
+            <div class="row justify-content-left">
+                <div class="col-md-12">
+                    <div class="card" style="margin-left: 200px; max-width: 2000px;">
+                        <div class="card-header text-white d-flex justify-content-between align-items-center"
+                            style="background-color: #2980B9;">
+                            <h5>Costo Total Produccion Mensual</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="container mt-3">
+                                        <input type="text" id="busqueda" placeholder="Buscar..."
+                                            class="form-control mb-2">
+                                        <div class="table-responsive">
+                                            <table id="mytable" class="table table-bordred table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Número de Pedido</th>
+                                                        <th>Costo de Materiales por Pedido</th>
+                                                        <th>Costo General por Pedido</th>
+                                                        <th>Costo Total del Pedido</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var costosProduccion in Model)
+                                                    {
+                                                        <tr>
+                                                            <td>@costosProduccion.numero_orden</td>
+                                                            <td>@costosProduccion.costo_materia_prima</td>
+                                                            <td>@costosProduccion.costo_total_general</td>
+                                                            <td>@costosProduccion.costo_total_pedidos</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr class="total">
+                                                        <td colspan="3">Total </td>
+                                                        <td id="totalPedidos" class="text-left"></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                        <!-- Agrega la paginación -->
+                                        <div class="d-flex justify-content-center">
+                                            <ul class="pagination">
+                                                <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Obtener la tabla
+        var tabla = document.getElementById('mytable');
+
+        // Calcular la suma de la columna costo_total_pedidos
+        var totalSuma = 0;
+        for (var i = 1; i < tabla.rows.length - 1; i++) {
+            var celda = tabla.rows[i].cells[3]; // Obtener la celda en la posición 3 (costo_total_pedidos)
+            var valor = parseNumber(celda.innerText); // Utilizar la función de ayuda para convertir el valor
+            totalSuma += valor;
+        }
+
+        // Actualizar el valor en el pie de página
+        var totalPedidos = document.getElementById('totalPedidos');
+        totalPedidos.innerText = '₡' + totalSuma.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    });
+
+    // Función para convertir el formato de moneda a número
+    function parseNumber(value) {
+        // Eliminar caracteres no numéricos y convertir a número
+        return parseFloat(value.replace(/[^\d.-]/g, '').replace(',', '')) || 0;
+    }
+</script>
+
+   <script>
+        const inputBusqueda = document.getElementById('busqueda');
+        const tabla = document.getElementById('miTabla');
+        const filas = tabla.getElementsByTagName('tr');
+
+        inputBusqueda.addEventListener('input', () => {
+            const filtro = inputBusqueda.value.toLowerCase();
+
+            for (let i = 1; i < filas.length; i++) {
+                const textoFila = filas[i].textContent.toLowerCase();
+                if (textoFila.includes(filtro)) {
+                    filas[i].style.display = '';
+                } else {
+                    filas[i].style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+@{
+    Layout = Layout; // layout=layout se trae estilo
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mantenimiento de Productos</title>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+
+    <!-- Agrega las referencias a los archivos de Bootstrap CSS y JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+      @if (TempData["SuccedMensaje"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccedMensaje"]</div>
+    }
+    @if (TempData["ErrorMensaje2"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMensaje2"]</div>
+    }
+    @if (TempData["ErrorMensaje1"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMensaje1"]</div>
+    }
+    @if (TempData["ErrorMensaje"] != null)
+    {
+        <div class="alert alert-info">@TempData["ErrorMensaje"]</div>
+    }
+    <main class="my-form">
+        <div class="container fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header text-white text-md-center" style="background-color: #2980B9;">NUEVO
+                            INGRESO DE PRODUCTO</div>
+                        <div class="card-body">
+                            <form name="my-form" onsubmit="return validform()"
+                                action="@Url.Action("Create","Productos")" method="post">
+
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">NOMBRE DEL
+                                        PRODUCTO</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="nombre" class="form-control" name="nombre"
+                                            @*oninput="soloLetras(this)"*@ required>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="user_name" class="col-md-4 col-form-label text-md-right">DESCRIPCION DEL
+                                        PRODUCTO</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="descripcion" class="form-control" name="descripcion"
+                                            @*oninput="soloLetras(this)"*@ required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="phone_number"
+                                        class="col-md-4 col-form-label text-md-right">CATEGORIA</label>
+                                    <div class="col-md-6">
+                                        <select id="miDropdown2" name="categoria" class="form-control" required>
+                                            <option value="">SELECCIONE UNA OPCION</option>
+                                            <option value="1">CAMISA</option>
+                                            <option value="2">PANTALON</option>
+                                            <option value="3">VESTIDO</option>
+                                        </select>
+                                    </div>
+                                </div> 
+
+                                <div class="form-group row">
+                                    <label for="phone_number" class="col-md-4 col-form-label text-md-right">TALLA
+                                    </label>
+                                    <div class="col-md-6">
+                                        <select id="miDropdown2" name="talla" class="form-control" required>
+                                            <option value="">SELECCIONE UNA OPCION</option>
+                                            <option value="1">XS</option>
+                                            <option value="2">S</option>
+                                            <option value="3">M</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="phone_number" class="col-md-4 col-form-label text-md-right">COSTO
+                                        TOTAL</label>
+                                    <div class="col-md-6">
+                                        <input type="number" id="costot" class="form-control" name="precio_venta"
+                                            required>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        GUARDAR
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </main>
+</body>
+
+</html>

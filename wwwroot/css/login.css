@@ -1,0 +1,25 @@
+body{
+    background-color: #75C9F0
+    ;
+}
+.caja{
+   text-align: center;
+   margin-top: 70px;
+}
+.caja img{
+   width: 200px;
+   height: 200px;
+}
+#login .container #login-row #login-column #login-box {
+    margin-top: 10px;
+    max-width: 500px;
+    height: 300px;
+    border: 1px solid #E2F2FC;
+    background-color: #E2F2FC;
+  }
+  #login .container #login-row #login-column #login-box #login-form {
+    padding: 20px;
+  }
+  #login .container #login-row #login-column #login-box #login-form #register-link {
+    margin-top: -85px;
+  }

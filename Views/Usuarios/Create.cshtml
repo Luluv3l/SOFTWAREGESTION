@@ -1,0 +1,150 @@
+@{
+    Layout = Layout; // layout=layout se trae estilo
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mantenimiento de Productos</title>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+</head>
+
+<body>
+    @if (TempData["SuccedMensaje"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccedMensaje"]</div>
+    }
+    @if (TempData["ErrorMensaje2"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMensaje2"]</div>
+    }
+    @if (TempData["ErrorMensaje1"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMensaje1"]</div>
+    }
+    @if (TempData["ErrorMensaje"] != null)
+    {
+        <div class="alert alert-info">@TempData["ErrorMensaje"]</div>
+    }
+    <main class="my-form">
+        <div class="container fluid">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header text-white text-md-center" style="background-color: #2980B9;">NUEVO
+                            INGRESO DE USUARIO</div>
+                        <div class="card-body">
+                            <form name="my-form" name="my-form" onsubmit="return validform()"
+                                action="@Url.Action("Create","Usuarios")" method="post">
+
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">NOMBRE
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="nombre" class="form-control" name="nombre"
+                                        oninput="soloLetras(this)" required>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">PRIMER
+                                        APELLIDO</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="apellido_1" class="form-control" name="apellido_1"
+                                        oninput="soloLetras(this)" required>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">SEGUNDO
+                                        APELLIDO
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="apellido_2" class="form-control" name="apellido_2"
+                                        oninput="soloLetras(this)" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">CORREO
+                                        ELECTRONICO
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="corre" class="form-control" name="correo" required>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">CONTRASEÑA
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="contrasena" class="form-control" name="contrasena"
+                                            required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">FECHA
+                                        REGISTRO
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input type="date" id="fecha_registro" class="form-control"
+                                            name="fecha_registro" required>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <label for="phone_number" class="col-md-4 col-form-label text-md-right">ROL
+                                    </label>
+                                    <div class="col-md-6">
+                                        <select id="miDropdown2" name="opcionSeleccionadarol" class="form-control"
+                                            required>
+                                            <option value="">SELECCIONE UNA OPCION</option>
+                                            <option value="1">Admin</option>
+                                            <option value="2">General</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        GUARDAR
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </main>
+
+    <script>
+
+        function soloLetras(input) {
+
+            var regex = /[^a-zA-Z]/g;
+
+            input.value = input.value.replace(regex, '');
+        }
+
+
+
+    </script>
+</body>
+
+</html>

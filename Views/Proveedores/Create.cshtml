@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>proveedores</title>
+    <title>Mantenimiento de Proveedores</title>
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
@@ -46,7 +46,7 @@
                                 action="@Url.Action("Create","Proveedores")" method="post">
 
                                 <div class="form-group row">
-                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">NOMBRE 
+                                    <label for="nombre" class="col-md-4 col-form-label text-md-right">NOMBRE 
                                         PROVEEDOR</label>
                                     <div class="col-md-6">
                                         <input type="text" id="nombre" class="form-control" name="nombre_proveedor"
@@ -56,8 +56,8 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="user_name"
-                                        class="col-md-4 col-form-label text-md-right">DIRECCION</label>
+                                    <label for="descripcion"
+                                        class="col-md-4 col-form-label text-md-right">DIRECCIÓN</label>
                                     <div class="col-md-6">
                                         <input type="text" id="descripcion" class="form-control" name="direccion"
                                             @*oninput="soloLetras(this)"*@ required>
@@ -65,21 +65,27 @@
                                 </div>
 
                                  <div class="form-group row">
-                                    <label for="user_name"
-                                        class="col-md-4 col-form-label text-md-right">CORRE</label>
+                                    <label for="email"
+                                        class="col-md-4 col-form-label text-md-right">CORREO</label>
                                     <div class="col-md-6">
-                                        <input type="text" id="descripcion" class="form-control" name="correo"
-                                            @*oninput="soloLetras(this)"*@ required>
+                                        <input type="email" id="email" class="form-control" name="correo" *@ required>
                                     </div>
                                 </div>
 
                         
 
                                 <div class="form-group row">
-                                    <label for="phone_number" class="col-md-4 col-form-label text-md-right">CONTACTO
+                                    <label for="telefono" class="col-md-4 col-form-label text-md-right">CONTACTO
                                         </label>
                                     <div class="col-md-6">
-                                        <input type="number" id="telefono" class="form-control" name="telefono" required>
+                                        <input type="number" id="telefono" class="form-control" name="telefono" required
+                                            pattern="[0-9]{8}" 
+                                            maxlength="8"
+                                            placeholder="Ingrese 8 dígitos, ejemplo: 88888888">
+                                            <div id="mensajeError" style="display: none; color: red;">Ingrese solo números.</div>
+
+
+
                                     </div>
                                 </div>
 
@@ -121,9 +127,30 @@
             input.value = input.value.replace(regex, '');
         }
 
+        // Mensaje de error, para contacto
+
+        const telefonoInput = document.getElementById('telefono');
+        const mensajeError = document.getElementById('mensajeError');
+
+        telefonoInput.addEventListener('input', function(event) {
+        const valor = event.target.value;
+        if (valor === '') {
+        mensajeError.style.display = 'none'; // Si el campo está vacío, oculta el mensaje de error
+        } else if (!/^\d+$/.test(valor)) {
+        mensajeError.style.display = 'block'; // Muestra el mensaje de error si no son solo dígitos
+        } else {
+        mensajeError.style.display = 'none'; // Oculta el mensaje de error si son dígitos válidos
+    }
+});
 
 
     </script>
+
+    
+
+
+
+
 </body>
 
 </html>

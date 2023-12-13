@@ -514,24 +514,41 @@
     ]
   },
   "packageFolders": {
-    "/Users/lulucespedes/.nuget/packages/": {}
+    "C:\\Users\\andre\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< Updated upstream
       "projectUniqueName": "/Users/lulucespedes/Downloads/SoftwareGestion-main/SoftwareGestion.csproj",
       "projectName": "SoftwareGestion",
       "projectPath": "/Users/lulucespedes/Downloads/SoftwareGestion-main/SoftwareGestion.csproj",
       "packagesPath": "/Users/lulucespedes/.nuget/packages/",
       "outputPath": "/Users/lulucespedes/Downloads/SoftwareGestion-main/obj/",
+=======
+      "projectUniqueName": "C:\\Users\\andre\\Documents\\New proyect\\SoftwareGestion\\SoftwareGestion.csproj",
+      "projectName": "SoftwareGestion",
+      "projectPath": "C:\\Users\\andre\\Documents\\New proyect\\SoftwareGestion\\SoftwareGestion.csproj",
+      "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\andre\\Documents\\New proyect\\SoftwareGestion\\obj\\",
+>>>>>>> Stashed changes
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "/Users/lulucespedes/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -578,7 +595,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.403/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.404\\RuntimeIdentifierGraph.json"
       }
     }
   }

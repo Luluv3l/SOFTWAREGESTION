@@ -12,7 +12,6 @@ namespace SoftwareGestion.Models
         public string direccion { get; set; }
         public string correo { get; set; }
         public int telefono { get; set; }
-        public DateTime fecha_registro { get; set; }
         public char estado { get; set; }
     }
 }

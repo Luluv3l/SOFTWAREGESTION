@@ -1,6 +1,5 @@
-@{
-    Layout = Layout; // layout=layout se trae estilo
-}
+
+@model List<SoftwareGestion.Models.Productos>;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,57 +11,335 @@
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
-
+<link rel="stylesheet" href="~/css/gestionorden/gestionorden.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- Agrega las referencias a los archivos de Bootstrap CSS y JS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <link rel ="stylesheet" src="~/Views/Shared/_Layout.cshtml.css"/>
+
+
 </head>
 
+
+
 <body>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+     @if (TempData["SuccedMensaje"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccedMensaje"]</div>
+    }
+
     <main class="my-form">
-        <div class="container fluid">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header text-white text-md-center" style="background-color: #2980B9;">LLISTA
-                            DE PRODUCTOS</div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Descripción</th>
-                                        <th scope="col">Precio</th>
-                                        <th scope="col">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                    <tr>
-                                        <td>Producto 1</td>
-                                        <td>Descripción del Producto 1</td>
-                                        <td>$19.99</td>
-                                        <td>
-                                            <button class="btn btn-info">Editar</button>
-                                            <button class="btn btn-danger">Eliminar</button>
-                                        </td>
-                                    </tr>
-                                   
-                                </tbody>
-                            </table>
-
+        <div class="container-fluid">
+            <div class="row justify-content-left">
+                <div class="col-md-12">
+                    <div class="card" style="margin-left: 200px; max-width: 2000px;">
+                        <div class="card-header text-white d-flex justify-content-between align-items-center"
+                            style="background-color: #2980B9;">
+                            <h5>Lista de Productos</h5>
+                            <a href="@Url.Action("Create","Productos")" id="show-popup" class="btn btn-success">+Crear
+                                Nuevo</a>
                         </div>
+                        <div class="card-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="container mt-3">
+                                        <input type="text" id="busqueda" placeholder="Buscar..."
+                                            class="form-control mb-2">
+                                        <div class="table-responsive">
+                                            <table id="mytable" class="table table-bordred table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-left">id producto</th>
+                                                        <th class="text-left">Nombre</th>
+                                                        <th class="text-left">Descripción</th>
+                                                        <th class="text-left">Categoría</th>
+                                                        <th class="text-center">Talla</th>
+                                                        <th class="text-center">Estado</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if(Model != null){
+
+                                                   
+                                                    @foreach (var producto in Model)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-left">@producto.id_producto</td>
+                                                            <td class="text-left">@producto.nombre</td>
+                                                            <td class="text-left">@producto.descripcion</td>
+                                                            <td class="text-left">@producto.id_categorias</td>
+                                                            <td class="text-left">@producto.id_tallas</td>
+                                                            <td class="text-left">@producto.estado</td>
+                                                            @* <td style="visibility:hidden;">@producto.label</td>
+                                                            <td class="text-left">@producto.precio_venta</td>
+                                                            <td style="visibility:hidden;">@producto.value</td>
+                                                            <td style="visibility:hidden;">@producto.IdCliente</td>
+                                                            <td style="visibility:hidden;">@producto.cantidad</td> *@
+                                                            
+                                                            
+                                                            
+                                                            <td class="text-center">
+
+                                                                <button type="button" class="btn btn-primary" id="BtnEliminar"
+                                                                    onclick="mostrarDetalles('@producto.id_producto','@producto.nombre','@producto.descripcion','@producto.id_categorias','@producto.id_tallas','@producto.estado', '1')"
+                                                                    action="@Url.Action("Editar","Productos")" method="post" asp-route-id_producto="@producto.id_producto"
+                                                                    >Editar</button>
+
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button type="button" class="btn btn-danger" id="BtnEliminar"
+                                                                    onclick="mostrarDetalles('@producto.id_producto','@producto.nombre','@producto.descripcion','@producto.id_categorias','@producto.id_tallas', '@producto.estado', '2')"
+                                                                     action="@Url.Action("Editar","Productos")" method="post" asp-route-id_producto="@producto.id_producto"
+                                                                    >Eliminar</button>
+                                                            </td>
+
+                                                        </tr>
+                                                    }
+                                                    }
 
 
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+
+                                        <!-- Modal para mostrar detalles del proveedor -->
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Detalles del
+                                                            Producto</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close">
+
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="modal-body">
+
+                                                        
+
+                                                        <form id="editarProductoForm"    action="@Url.Action("Editar","Productos")" method="post">
+
+
+
+                                                                <input type="hidden" id="id_producto" name="id_producto"/>
+                                                                
+
+
+
+                                                            <div class="form-control">
+                                                                <label class="form-label"
+                                                                    for="nombreProducto" >Nombre:</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="nombreProducto" name="nombre"
+                                                                    required>
+ 
+
+                                                            </div>
+                                                            <div class="form-control">
+                                                                <label class="form-label"
+                                                                    for="descripcionProducto">Descripción:</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="descripcionProducto" name="descripcion"
+                                                                    required>
+                                                            </div>
+                                                                
+                                                                
+                                                                <div class="form-control">
+                                                                    <label for="selectCategoria" class="form-label">Categoría:</label>
+                                                                    <select id="selectCategoria" name="categoria" class="form-select form-select-sm" required>
+                                                                        <option selected>Seleccione una Categoría</option>
+                                                                        <option value="1">Camisa</option>
+                                                                        <option value="2">Pantalón</option>
+                                                                        <option value="3">Vestido</option>
+                                                                    </select>
+                                                                </div>
+
+
+                                                                <div class="form-control">
+                                                                    <label for="selectTalla" class="form-label">Talla:</label>
+                                                                    <select id="selectTalla" name="categoria" class="form-select form-select-sm" required>
+                                                                        <option selected>Seleccione una talla</option>
+                                                                        <option value="1">XS</option>
+                                                                        <option value="2">S</option>
+                                                                        <option value="3">M</option>
+                                                                        <option value="4">L</option>
+                                                                    </select>
+                                                                </div>
+
+
+                                                                <div class="form-control">
+                                                                    <label for="selectEstado" class="form-label">Estado:</label>
+                                                                    <select id="selectEstado" name="estado" class="form-select form-select-sm" required>
+                                                                        <option selected>Seleccione un estado</option>
+                                                                        <option value="1">Activo</option>
+                                                                        <option value="2">Inactivo</option>
+                                                                    </select>
+                                                                </div>
+                                                            
+
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Cerrar</button>
+
+
+                                                                <button type="submit" class="btn btn-primary" id="btnGuardarCambios">Guardar cambios</button>
+
+
+                                                                <button type="submit" class="btn btn-danger" id="md_btnEliminar">Eliminar proveedor</button>
+
+
+
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <!-- Agrega la paginación -->
+                                    <div class="d-flex justify-content-center">
+                                        <ul class="pagination">
+                                            <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item"><a class="agpe-link" href="#">Siguiente</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
-
-
+        </div>
     </main>
+
+    @* <script src="script.js"></script> *@
+    <script>
+        const inputBusqueda = document.getElementById('busqueda');
+        const tabla = document.getElementById('mytable');
+        const filas = tabla.getElementsByTagName('tr');
+
+        inputBusqueda.addEventListener('input', () => {
+            const filtro = inputBusqueda.value.toLowerCase();
+
+            for (let i = 1; i < filas.length; i++) {
+                const textoFila = filas[i].textContent.toLowerCase();
+                if (textoFila.includes(filtro)) {
+                    filas[i].style.display = '';
+                } else {
+                    filas[i].style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+
+    <script>
+        function mostrarDetalles(idProducto, nombreProducto, descripcion, idCategoria, idTalla, estado, flag) {
+            var id_Producto = document.getElementById('id_producto');
+            var nombre_Producto = document.getElementById('nombreProducto');
+            var Descripcion_Producto = document.getElementById('descripcionProducto');
+            var select_Categorias = document.getElementById('selectCategoria');
+            var select_Tallas = document.getElementById('selectTalla');
+            //var precio_Venta = document.getElementById('precioVenta');
+            var Estado = document.getElementById('selectEstado');
+
+            id_Producto.value = idProducto;
+            nombre_Producto.value = nombreProducto;
+            Descripcion_Producto.value = descripcion;
+            select_Categorias.value = idCategoria;
+            select_Tallas.value = idTalla;
+            //precio_Venta.value = precioVenta;
+            Estado.value = estado;
+
+            console.log(Estado.value = estado);
+
+
+            var btnGuardarCambios = document.getElementById('btnGuardarCambios');
+            var md_btnEliminar = document.getElementById('md_btnEliminar');
+
+
+        if (flag === '1') {
+            btnGuardarCambios.style.display = 'block';
+            md_btnEliminar.style.display = 'none';
+
+            id_Producto.disabled = false;
+            nombre_Producto.disabled = false;
+            Descripcion_Producto.disabled = false;
+            select_Categorias.disabled = false;
+            select_Tallas.disabled = false;
+            estado.disabled = false;
+            //precio_Venta.disabled = false;
+
+            id_Producto.readOnly = false;
+            nombre_Producto.readOnly = false;
+            Descripcion_Producto.readOnly = false;
+            select_Categorias.readOnly = false;
+            select_Tallas.readOnly = false;
+            estado.readOnly = false;
+            //precio_Venta.readOnly = false;
+
+        } else if (flag === '2') {
+            btnGuardarCambios.style.display = 'none';
+            md_btnEliminar.style.display = 'block';
+
+            id_Producto.removeAttribute('required');
+            nombre_Producto.removeAttribute('required');
+            Descripcion_Producto.removeAttribute('required');
+            select_Categorias.removeAttribute('required');
+            select_Tallas.removeAttribute('required');
+            estado.removeAttribute('required');
+
+            id_Producto.readOnly = true;
+            nombre_Producto.readOnly = true;
+            Descripcion_Producto.readOnly = true;
+            select_Categorias.readOnly = true;
+            select_Tallas.readOnly = true;
+            estado.readOnly = true;
+
+
+        } else {
+            btnGuardarCambios.style.display = 'none';
+            md_btnEliminar.style.display = 'none';
+        }
+
+        $('#myModal').modal('show');
+}
+
+
+
+
+
+    </script>
+
+
+
+
+
 </body>
 
 </html>

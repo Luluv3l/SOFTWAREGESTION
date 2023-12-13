@@ -1,0 +1,319 @@
+ @model List<SoftwareGestion.Models.Proveedores> 
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla con Búsqueda Manual</title>
+    <link rel="stylesheet" href="~/css/gestionorden/gestionorden.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+
+
+
+</head>
+<style>
+    .form-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .input-container {
+        flex-grow: 1;
+    }
+</style>
+
+<body>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+
+
+    <main class="my-form">
+        <div class="container-fluid">
+            <div class="row justify-content-left">
+                <div class="col-md-12">
+                    <div class="card" style="margin-left: 200px; max-width: 2000px;">
+                        <div class="card-header text-white d-flex justify-content-between align-items-center"
+                            style="background-color: #2980B9;">
+                            <h5>Lista de Proveedores</h5>
+                            <a href="@Url.Action("Create","Proveedores")" id="show-popup" class="btn btn-light">+Crear
+                                Nuevo</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="container mt-3">
+                                        <input type="text" id="busqueda" placeholder="Buscar..."
+                                            class="form-control mb-2">
+                                        <div class="table-responsive">
+                                            <table id="mytable" class="table table-bordred table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-left"># Código Proveedor</th>
+                                                        <th class="text-left">Nombre Proveedor</th>
+                                                        <th class="text-left">Dirección</th>
+                                                        <th class="text-left">Correo</th>
+                                                        <th class="text-center">Teléfono</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var proveedor in Model)
+                                                    {
+                                                        <tr>
+                                                            <td class="text-left">@proveedor.id_proveedor</td>
+                                                            <td class="text-left">@proveedor.nombre_proveedor</td>
+                                                            <td class="text-left">@proveedor.direccion</td>
+                                                            <td class="text-left">@proveedor.correo</td>
+                                                            <td class="text-left">@proveedor.telefono</td>
+                                                            <td class="text-center">
+                                                                @*<a
+                                                            href="@Url.Action("Editar", new { id =
+                                                            proveedor.id_proveedor })">Editar</a> *@
+                                                                <button type="button" class="btn btn-primary" id="BtnEliminar"
+                                                                    onclick="mostrarDetalles('@proveedor.id_proveedor','@proveedor.nombre_proveedor','@proveedor.direccion','@proveedor.correo','@proveedor.telefono', '1')"
+                                                                    action="@Url.Action("Editar","Proveedores")" method="post" asp-route-id_proveedor="@proveedor.id_proveedor"
+                                                                    >Editar</button>
+
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button type="button" class="btn btn-danger" id="BtnEliminar"
+                                                                    onclick="mostrarDetalles('@proveedor.id_proveedor','@proveedor.nombre_proveedor','@proveedor.direccion','@proveedor.correo','@proveedor.telefono', '2')"
+                                                                     action="@Url.Action("Editar","Proveedores")" method="post" asp-route-id_proveedor="@proveedor.id_proveedor"
+                                                                    >Eliminar</button>
+                                                            </td>
+
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+
+                                        <!-- Modal para mostrar detalles del proveedor -->
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Detalles del
+                                                            Proveedor</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close">
+
+                                                        </button>
+                                                    </div>
+
+                                                    <div class="modal-body">
+
+                                                        
+
+                                                        <form id="editarProveedorForm"    action="@Url.Action("Editar","Proveedores")" method="post">
+
+
+
+                                                                <input type="hidden" id="id_proveedor" name="id_proveedor"/>
+                                                                <input type="hidden" id="estado" name="estado"/>
+
+
+
+
+
+
+                                                            <div class="form-control">
+                                                                <label class="form-label"
+                                                                    for="nombreProveedor" >Nombre:</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="nombreProveedor" name="nombre_proveedor"
+                                                                    required>
+ 
+
+                                                            </div>
+                                                            <div class="form-control">
+                                                                <label class="form-label"
+                                                                    for="direccionProveedor">Dirección:</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="direccionProveedor" name="direccion"
+                                                                    required>
+                                                            </div>
+                                                            <div class="form-control">
+                                                                <label class="form-label"
+                                                                    for="correoProveedor">Correo:</label>
+                                                                <input type="email" class="form-control"
+                                                                    id="correoProveedor" name="correo"
+                                                                    required>
+                                                            </div>
+                                                            <div class="form-control">
+                                                                <label class="form-label"
+                                                                    for="telefonoProveedor">Teléfono:</label>
+                                                                <input type="number" class="form-control"
+                                                                    pattern="[0-9]{8}" maxlength="8"
+                                                                    placeholder="Ingrese 8 dígitos, ejemplo: 88888888"
+                                                                    id="telefonoProveedor" name="telefono"
+                                                                    required>
+                                                                <div id="mensajeError"
+                                                                    style="display: none; color: red;">Ingrese solo
+                                                                    números.</div>
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Cerrar</button>
+
+
+                                                                <button type="submit" class="btn btn-primary" id="btnGuardarCambios">Guardar cambios</button>
+
+
+                                                                <button type="submit" class="btn btn-danger" id="md_btnEliminar">Eliminar proveedor</button>
+
+
+
+
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <!-- Agrega la paginación -->
+                                    <div class="d-flex justify-content-center">
+                                        <ul class="pagination">
+                                            <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item"><a class="agpe-link" href="#">Siguiente</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    @* <script src="script.js"></script> *@
+    <script>
+        const inputBusqueda = document.getElementById('busqueda');
+        const tabla = document.getElementById('mytable');
+        const filas = tabla.getElementsByTagName('tr');
+
+        inputBusqueda.addEventListener('input', () => {
+            const filtro = inputBusqueda.value.toLowerCase();
+
+            for (let i = 1; i < filas.length; i++) {
+                const textoFila = filas[i].textContent.toLowerCase();
+                if (textoFila.includes(filtro)) {
+                    filas[i].style.display = '';
+                } else {
+                    filas[i].style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+
+    <script>
+        function mostrarDetalles(idProveedor, NombreProveedor, Direccion, Correo, Contacto, Estado) {
+    var Id_Proveedor = document.getElementById('id_proveedor');
+    var nombre_Proveedor = document.getElementById('nombreProveedor');
+    var direccion_Proveedor = document.getElementById('direccionProveedor');
+    var correo_Proveedor = document.getElementById('correoProveedor');
+    var telefono_Proveedor = document.getElementById('telefonoProveedor');
+    var estado = document.getElementById('estado');
+
+    Id_Proveedor.value = idProveedor;
+    nombre_Proveedor.value = NombreProveedor;
+    direccion_Proveedor.value = Direccion;
+    correo_Proveedor.value = Correo;
+    telefono_Proveedor.value = Contacto;
+    estado.value = Estado;
+
+    var btnGuardarCambios = document.getElementById('btnGuardarCambios');
+    var md_btnEliminar = document.getElementById('md_btnEliminar');
+
+    if (Estado === '1') {
+        btnGuardarCambios.style.display = 'block';
+        md_btnEliminar.style.display = 'none';
+
+        Id_Proveedor.disabled = false;
+        nombre_Proveedor.disabled = false;
+        direccion_Proveedor.disabled = false;
+        correo_Proveedor.disabled = false;
+        telefono_Proveedor.disabled = false;
+        estado.disabled = false;
+
+        Id_Proveedor.readOnly = false;
+        nombre_Proveedor.readOnly = false;
+        direccion_Proveedor.readOnly = false;
+        correo_Proveedor.readOnly = false;
+        telefono_Proveedor.readOnly = false;
+        estado.readOnly = false;
+
+    } else if (Estado === '2') {
+        btnGuardarCambios.style.display = 'none';
+        md_btnEliminar.style.display = 'block';
+
+        Id_Proveedor.removeAttribute('required');
+        nombre_Proveedor.removeAttribute('required');
+        direccion_Proveedor.removeAttribute('required');
+        correo_Proveedor.removeAttribute('required');
+        telefono_Proveedor.removeAttribute('required');
+        estado.removeAttribute('required');
+
+        Id_Proveedor.readOnly = true;
+        nombre_Proveedor.readOnly = true;
+        direccion_Proveedor.readOnly = true;
+        correo_Proveedor.readOnly = true;
+        telefono_Proveedor.readOnly = true;
+        estado.readOnly = true;
+
+        /*Id_Proveedor.disabled = true;
+        nombre_Proveedor.disabled = true;
+        direccion_Proveedor.disabled = true;
+        correo_Proveedor.disabled = true;
+        telefono_Proveedor.disabled = true;
+        estado.disabled = true;*/
+
+    } else {
+        btnGuardarCambios.style.display = 'none';
+        md_btnEliminar.style.display = 'none';
+    }
+
+    $('#myModal').modal('show');
+}
+
+
+
+
+
+    </script>
+
+
+
+
+
+</body>
+
+</html>

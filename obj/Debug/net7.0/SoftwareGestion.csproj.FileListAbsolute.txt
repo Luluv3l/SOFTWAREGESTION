@@ -36,6 +36,7 @@
 /Users/lulucespedes/Projects/SoftwareGestion/bin/Debug/net7.0/runtimes/win/lib/netcoreapp2.1/System.Data.SqlClient.dll
 /Users/lulucespedes/Projects/SoftwareGestion/obj/Debug/net7.0/SoftwareGestion.csproj.AssemblyReference.cache
 /Users/lulucespedes/Projects/SoftwareGestion/obj/Debug/net7.0/SoftwareGestion.csproj.CopyComplete
+<<<<<<< Updated upstream
 /Users/lulucespedes/Downloads/SoftwareGestion-main/bin/Debug/net7.0/appsettings.Development.json
 /Users/lulucespedes/Downloads/SoftwareGestion-main/bin/Debug/net7.0/appsettings.json
 /Users/lulucespedes/Downloads/SoftwareGestion-main/bin/Debug/net7.0/SoftwareGestion.staticwebassets.runtime.json
@@ -75,3 +76,43 @@
 /Users/lulucespedes/Downloads/SoftwareGestion-main/obj/Debug/net7.0/SoftwareGestion.genruntimeconfig.cache
 /Users/lulucespedes/Downloads/SoftwareGestion-main/obj/Debug/net7.0/ref/SoftwareGestion.dll
 /Users/lulucespedes/Downloads/SoftwareGestion-main/bin/Debug/net7.0/Newtonsoft.Json.dll
+=======
+C:\Users\andre\Documents\New proyect\SoftwareGestion\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\andre\Documents\New proyect\SoftwareGestion\bin\Debug\net7.0\appsettings.json
+C:\Users\andre\Documents\New proyect\SoftwareGestion\bin\Debug\net7.0\SoftwareGestion.staticwebassets.runtime.json
+C:\Users\andre\Documents\New proyect\SoftwareGestion\bin\Debug\net7.0\SoftwareGestion.exe
+C:\Users\andre\Documents\New proyect\SoftwareGestion\bin\Debug\net7.0\SoftwareGestion.deps.json
+C:\Users\andre\Documents\New proyect\SoftwareGestion\bin\Debug\net7.0\SoftwareGestion.runtimeconfig.json
+C:\Users\andre\Documents\New proyect\SoftwareGestion\bin\Debug\net7.0\SoftwareGestion.dll
+C:\Users\andre\Documents\New proyect\SoftwareGestion\bin\Debug\net7.0\SoftwareGestion.pdb
+C:\Users\andre\Documents\New proyect\SoftwareGestion\bin\Debug\net7.0\System.Data.SqlClient.dll
+C:\Users\andre\Documents\New proyect\SoftwareGestion\bin\Debug\net7.0\runtimes\win-arm64\native\sni.dll
+C:\Users\andre\Documents\New proyect\SoftwareGestion\bin\Debug\net7.0\runtimes\win-x64\native\sni.dll
+C:\Users\andre\Documents\New proyect\SoftwareGestion\bin\Debug\net7.0\runtimes\win-x86\native\sni.dll
+C:\Users\andre\Documents\New proyect\SoftwareGestion\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\andre\Documents\New proyect\SoftwareGestion\bin\Debug\net7.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\SoftwareGestion.csproj.AssemblyReference.cache
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\SoftwareGestion.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\SoftwareGestion.AssemblyInfoInputs.cache
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\SoftwareGestion.AssemblyInfo.cs
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\SoftwareGestion.csproj.CoreCompileInputs.cache
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\SoftwareGestion.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\SoftwareGestion.RazorAssemblyInfo.cache
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\SoftwareGestion.RazorAssemblyInfo.cs
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\staticwebassets\msbuild.SoftwareGestion.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\staticwebassets\msbuild.build.SoftwareGestion.props
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.SoftwareGestion.props
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.SoftwareGestion.props
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\scopedcss\bundle\SoftwareGestion.styles.css
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\scopedcss\projectbundle\SoftwareGestion.bundle.scp.css
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\SoftwareGestion.csproj.CopyComplete
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\SoftwareGestion.dll
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\refint\SoftwareGestion.dll
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\SoftwareGestion.pdb
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\SoftwareGestion.genruntimeconfig.cache
+C:\Users\andre\Documents\New proyect\SoftwareGestion\obj\Debug\net7.0\ref\SoftwareGestion.dll
+>>>>>>> Stashed changes
